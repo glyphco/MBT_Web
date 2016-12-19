@@ -23,14 +23,16 @@ class SocialAuthController extends Controller {
 	public function callback($service) {
 	$request = $this->request->all();
 
-	if (array_key_exists('doit', $request)) {
-		$user = Socialite::driver($service)->userFromToken($request['token']);
-		return view ( 'home' )->withDetails ( $user )->withService ( $service );
-	}
+	// if (array_key_exists('doit', $request)) {
+	// 	$user = Socialite::driver($service)->userFromToken($request['token']);
+	// 	return view ( 'home' )->withDetails ( $user )->withService ( $service );
+	// }
 
 $user = Socialite::with ( $service )->stateless()->user ();
 
-	$away = 'http://mbtauth.dev/callback/'.$service.'?doit&token='.$user->token;
+
+//get token through guzzle (todo)
+	$away = 'http://mbtweb.dev/gettoken/'.$service.'?token='.$user->token;
 
 	return redirect()->away($away);
 
