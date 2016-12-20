@@ -2,70 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Socialite;
-use Redirect;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Client;
-
+use App\Models\User;
+use Illuminate\Http\Request;
 use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Socialite;
 
-class JWTAuthController extends Controller {
+class JWTAuthController extends Controller
+{
 
-   protected $request;
+    protected $request;
+    protected $user;
 
-   public function __construct(\Illuminate\Http\Request $request)
-   {
-       $this->request = $request;
-   }
-
-	public function gettoken($service) {
-	$request = $this->request->all();
-	$socialize_user = Socialite::driver($service)->userFromToken($request['token']);
-
-	dump('requested token');
-	dd('ID:'.$socialize_user->getId());
-
-//tie in the user model
-    $user = User::where($service.'_user_id', $socialize_user->getId())->first();
-
-    // register (if no user)
-    if (!$user) {
-        $user = new User;
-        $user->facebook_id = $facebook_user_id;
-        $user->save();
+    public function __construct(\Illuminate\Http\Request $request, User $user)
+    {
+        $this->request = $request;
+        $this->user    = $user;
     }
 
-    // login
-    Auth::loginUsingId($user->id);
+    public function gettoken($service)
+    {
+        $request        = $this->request->all();
+        $socialize_user = Socialite::driver($service)->userFromToken($request['token']);
 
+        //Used for authenticator disambiguation
+        //$company_alias  = $request['alias'];
 
-	dump();
-dd($user);
+        //Holder for the service ID field in the Database (ex: facebook_id)
+        $service_ID = $service . '_id';
 
-// $request = new \GuzzleHttp\Psr7\Request('GET', 'http://mbtweb.dev/');
-// $promise = $client->sendAsync($request)->then(function ($response) {
-//     echo 'I completed! ' . $response->getBody();
-// });
-// $promise->wait();
+        //tie in the user model
+        $user = User::where($service_ID, $socialize_user->getId())->first();
 
-// 			$user = Socialite::driver($service)->userFromToken($request['token']);
-// 			dd($user);
-// 			//return view ( 'home' )->withDetails ( $user )->withService ( $service );
-	}
+        // register (if no user)
+        if (!$user) {
+            $user = new $this->user;
+            $fill = [
+                $service_ID => $socialize_user->getId(),
+                'name'      => $socialize_user->getName(),
+                'email'     => $socialize_user->getEmail(),
+                'avatar'    => $socialize_user->getAvatar(),
+            ];
+            $user = $user->fill($fill);
+            $user->save();
+        }
 
-// 	public function servetoken($service) {
+        $JWT = JWTAuth::fromUser($user);
 
-// $request = new \GuzzleHttp\Psr7\Request('GET', 'http://httpbin.org');
-// $promise = $client->sendAsync($request)->then(function ($response) {
-//     echo 'I completed! ' . $response->getBody();
-// });
-// $promise->wait();
+        return response()->json(compact('JWT'));
 
-// 			$user = Socialite::driver($service)->userFromToken($request['token']);
-// 			dd($user);
-// 			//return view ( 'home' )->withDetails ( $user )->withService ( $service );
-// 	}
+    }
+
 }
