@@ -69,13 +69,11 @@ html, body {
 <
 	<div class="flex-center position-ref full-height">
 		<div class="content">
-			<div class="title m-b-md">Laravel Social Login</div>
+			<div class="title m-b-md">MyBoringTown -0.0a</div>
 
 			<div class="links">
 				<a href="redirect/facebook">Login in with Facebook</a> <a
-					href="redirect/google">Login in with Google +</a> <a
-					href="redirect/twitter">Login in with Twitter</a> <a
-					href="redirect/github">Login in with Github</a>
+					href="redirect/google">Login in with Google</a>
 			</div>
 		</div>
 	</div>

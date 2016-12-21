@@ -46,7 +46,7 @@ DB_PASSWORD=secret
 ```
 only change this to another server if you intend on installing it on 2 servers
 ```
-AUTH_SERVER=http://mbtweb.dev
+AUTH_SERVER=http://mbtauth.dev
 ```
 ```
 GOOGLE_ID=xxx
@@ -58,39 +58,12 @@ FACEBOOK_SCECRET=xxx
 FACEBOOK_REDIRECT=http://mbtweb.dev/callback/facebook
 ```
 
-## Breakdown
-
-the `social Auth Controller` represents the items on the `webserver`
-the `JWTAuthController` represents the items on the `Authentication server`
-the `TestController` shows a Response of the user when a correct JWT is supplied `API`
-
-### Web Server
-connect to `mbtweb.dev`
-redirect you to the social lagin page for the service
-then receives the `callback` and the `service's token`
-User is redirected to the `Authentication Server` for the JWT Token
-
-### Authentication Server
-Receives the `service's token`
-Authenticates the `service token` with the `service` to get the `service ID`
-Looks up the `user` by `service ID`
-If user doesnt exist, they are created.
-Takes the `User` and makes a `JWT`
-Returns the `JWT`
-
-### API (Test Controller)
-
-sending a GET request to /test with a header containing:
-`Authorization:Bearer [JWT HERE]`
-will return the user from the database
-
 ## Authors
 
-* **Shawn Dalton** - *All the work* 
+* **Shawn Dalton** - *All the work so far* 
 
 
 ## Acknowledgments
 
 * Jefferson
-* Inspiration
-* etc
+* Tessa and Samantha
