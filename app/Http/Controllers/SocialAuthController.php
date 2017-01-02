@@ -44,7 +44,14 @@ class SocialAuthController extends Controller {
 		// }
 		$contents = $response->getBody()->getContents();
 		$jwt = json_decode($contents, true)['JWT'];
-		dd($jwt);
+		//dd($jwt);
+
+		$cookie = cookie('token', $jwt, config('jwt.ttl'), "/", null, false, true);
+
+		//return response()->json($jwt)->withCookie($cookie);
+
+		return redirect('home')->withCookie($cookie);
+
 	}
 
 }
