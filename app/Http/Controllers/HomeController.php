@@ -28,6 +28,7 @@ class HomeController extends Controller {
 		$contents = $response->getBody()->getContents();
 
 		var_dump($contents);
+		var_dump($token);
 
 	}
 
