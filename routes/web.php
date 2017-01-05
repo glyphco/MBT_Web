@@ -20,3 +20,5 @@ Route::get('/test', 'TestController@test');
 //Route::get ( '/servetoken/{service}', 'JWTController@gettoken' );
 
 Route::get('/home', 'HomeController@home');
+
+Route::get('/venue/map', 'VenueController@map');
