@@ -21,7 +21,6 @@ class VenueController extends Controller {
 
 		try {
 
-			//get user settings
 			$client = new Client([
 				'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
 				'timeout'  => 5.0,
@@ -34,7 +33,7 @@ class VenueController extends Controller {
 			$contents = $response->getBody()->getContents();
 
 		} catch (RequestException $re) {
-			//For handling exception
+			var_dump($re);
 		}
 
 		var_dump(json_decode($contents, true)['data']);

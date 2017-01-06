@@ -15,14 +15,14 @@ class HomeController extends Controller {
 
 	public function home(Request $request) {
 		$token = $request->cookie('token');
+
+		$client = new Client([
+			'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
+			'timeout'  => 5.0,
+		]);
 		dd($token);
 
 		try {
-
-			$client = new Client([
-				'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
-				'timeout'  => 5.0,
-			]);
 
 			$response = $client->request('GET', '/userinfo', [
 				'query' => ['token' => $token],
