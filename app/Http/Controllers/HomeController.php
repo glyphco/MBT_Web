@@ -16,18 +16,11 @@ class HomeController extends Controller {
 	public function home(Request $request) {
 		$token = $request->cookie('token');
 
-		$client = new Client([
-			'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
-			'timeout'  => 5.0,
-		]);
-
-		$contents = $response->getBody()->getContents();
-
-		var_dump($contents);
-		var_dump($token);
-
-		dd('done');
 		try {
+			$client = new Client([
+				'base_uri' => env('API_SERVER', 'http://mbtapi.dev'),
+				'timeout'  => 5.0,
+			]);
 
 			$response = $client->request('GET', '/userinfo', [
 				'query' => ['token' => $token],
@@ -35,8 +28,8 @@ class HomeController extends Controller {
 
 			$contents = $response->getBody()->getContents();
 
-		} catch (RequestException $re) {
-			var_dump($re);
+		} catch (\GuzzleHttp\Exception\RequestException $e) {
+			$this->errors = json_decode($e->getResponse()->getBody()->getContents());
 		}
 
 		var_dump($contents);
