@@ -20,8 +20,13 @@ class HomeController extends Controller {
 			'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
 			'timeout'  => 5.0,
 		]);
-		dd($token);
 
+		$contents = $response->getBody()->getContents();
+
+		var_dump($contents);
+		var_dump($token);
+
+		dd('done');
 		try {
 
 			$response = $client->request('GET', '/userinfo', [

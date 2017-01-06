@@ -69,7 +69,7 @@ html, body {
 <
 	<div class="flex-center position-ref full-height">
 		<div class="content">
-			<div class="title m-b-md">MyBoringTown -0.0b</div>
+			<div class="title m-b-md">MyBoringTown -0.0a</div>
 
 			<div class="links">
 				<a href="redirect/facebook">Login in with Facebook</a> <a

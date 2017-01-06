@@ -36,7 +36,7 @@ class VenueController extends Controller {
 			var_dump($re);
 		}
 
-		var_dump(json_decode($contents, true)['data']);
+		var_dump(json_decode($contents, true));
 		var_dump($token);
 
 	}
