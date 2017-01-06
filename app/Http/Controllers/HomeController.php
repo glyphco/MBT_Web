@@ -1,4 +1,5 @@
-<?php namespace App\Http\Controllers;
+<?php
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
@@ -15,17 +16,22 @@ class HomeController extends Controller {
 	public function home(Request $request) {
 		$token = $request->cookie('token');
 
-		//get user settings
-		$client = new Client([
-			'base_uri' => env('API_SERVER', 'http://mbtapi.dev'),
-			'timeout' => 5.0,
-		]);
+		try {
 
-		$response = $client->request('GET', '/userinfo', [
-			'query' => ['token' => $token],
-		]);
+			$client = new Client([
+				'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
+				'timeout'  => 5.0,
+			]);
 
-		$contents = $response->getBody()->getContents();
+			$response = $client->request('GET', '/userinfo', [
+				'query' => ['token' => $token],
+			]);
+
+			$contents = $response->getBody()->getContents();
+
+		} catch (RequestException $re) {
+			var_dump($re);
+		}
 
 		var_dump($contents);
 		var_dump($token);
