@@ -28,25 +28,22 @@ class SocialAuthController extends Controller {
 
 		$client = new Client([
 			'base_uri' => env('AUTH_SERVER', 'http://mbtauth.dev'),
-			'timeout'  => 5.0,
+			'timeout' => 5.0,
 		]);
 
 		$response = $client->request('GET', '/gettoken/' . $service, [
 			'query' => ['token' => $socailuser->token],
 		]);
 
-		// foreach ($response->getHeaders() as $name => $values) {
-		//     echo $name . ':::: ' . implode(', ', $values) . "<br>";
-		// }
 		$contents = $response->getBody()->getContents();
-		$jwt      = json_decode($contents, true)['JWT'];
+		$jwt = json_decode($contents, true)['JWT'];
 		//dd($jwt);
 
 		$cookie = cookie('token', $jwt, config('jwt.ttl'), "/", null, false, true);
 
 		//return response()->json($jwt)->withCookie($cookie);
 
-		return redirect('home')->withCookie($cookie);
+		return redirect('\\')->withCookie($cookie);
 
 	}
 

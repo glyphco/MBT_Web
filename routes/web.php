@@ -10,15 +10,25 @@
  * | contains the "web" middleware group. Now create something great!
  * |
  */
-Route::get('/', function () {
-	return view('welcome');
-});
+
+//This is the callbacks for authentication
+//Sends you to SocialAuth
 Route::get('/redirect/{service}', 'SocialAuthController@redirect');
+//Come back from SocialAuth
 Route::get('/callback/{service}', 'SocialAuthController@callback');
+//Go to the Auth Sever to get a JWT
 Route::get('/gettoken/{service}', 'JWTAuthController@gettoken');
+
 Route::get('/test', 'TestController@test');
-//Route::get ( '/servetoken/{service}', 'JWTController@gettoken' );
 
-Route::get('/home', 'HomeController@home');
+Route::get('/login', 'LoginController');
+Route::get('/logout', 'LogoutController');
 
-Route::get('/venue/map', 'VenueController@map');
+Route::group(['middleware' => 'JWTCookieExists'], function () {
+
+	Route::get('/', 'HomepageController');
+	Route::get('/home', 'HomeController@home');
+
+	Route::get('/venue/map', 'VenueController@map');
+
+});

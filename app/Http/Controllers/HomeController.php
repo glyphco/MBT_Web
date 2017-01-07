@@ -19,7 +19,7 @@ class HomeController extends Controller {
 		try {
 			$client = new Client([
 				'base_uri' => env('API_SERVER', 'http://mbtapi.dev'),
-				'timeout'  => 5.0,
+				'timeout' => 5.0,
 			]);
 
 			$response = $client->request('GET', '/userinfo', [
@@ -30,6 +30,7 @@ class HomeController extends Controller {
 
 		} catch (\GuzzleHttp\Exception\RequestException $e) {
 			$this->errors = json_decode($e->getResponse()->getBody()->getContents());
+			dd($this->errors);
 		}
 
 		var_dump($contents);
