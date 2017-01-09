@@ -26,13 +26,18 @@ class guzzler {
 		try {
 
 			$response = $client->request('GET', $location, $options);
-			//$response = $client->request('GET', 'http://httpstat.us/500', $options); //force an error (testing)
+			//$response = $client->request('GET', 'http://httpstat.us/404', $options); //force an error (testing)
 
 			$contents = $response->getBody()->getContents();
 
-		} catch (\GuzzleHttp\Exception\RequestException $e) {
-			return $this->handleException($e);
+		} catch (\GuzzleHttp\Exception\ConnectException $e) {
 
+			$this->handleException($e);
+
+		} catch (\GuzzleHttp\Exception\ClientException $e) {
+			$this->handleException($e);
+		} catch (GuzzleHttp\Exception\ServerException $e) {
+			$this->handleException($e);
 		}
 		$contents = json_decode($contents, true);
 
@@ -57,6 +62,9 @@ class guzzler {
 		case '401':
 			$error = $code . ': your token has expired [' . $reason . ']';
 			break;
+		case '404':
+			$error = $code . ': unable to locate data [' . $reason . ']';
+			break;
 		case '500':
 			$error = $code . ': problem with the server [' . $reason . ']';
 			break;
@@ -64,8 +72,9 @@ class guzzler {
 			$error = $code . ': unknown error';
 			break;
 		}
-		return view('error')
-			->with('error', $error . ' (prettier errors soon)')
-			->with('token', $token);
+
+		return response(view('error')
+				->with('error', $error . ' (prettier errors soon)')
+				->with('token', $token))->send();
 	}
 }

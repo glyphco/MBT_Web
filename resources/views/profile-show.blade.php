@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>My Boring Town - Venue - {{$venue['name']}}</title>
+<title>My Boring Town - Profile - {{$profile['name']}}</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,600"
@@ -88,7 +88,7 @@ html, body {
 		<div class="content">
 @include('head')
 @include('errors-snip')
-@include('venue-card')
+@include('profile-card')
 		</div>
 	</div>
 </body>
