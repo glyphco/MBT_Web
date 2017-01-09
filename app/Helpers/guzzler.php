@@ -1,4 +1,5 @@
-<?php namespace App\Helpers;
+<?php
+namespace App\Helpers;
 
 use GuzzleHttp\Client;
 
@@ -11,16 +12,16 @@ class guzzler {
 	}
 
 	public function guzzleGET($location, $params = null) {
-		$token = $this->request->cookie('token');
+		$token   = $this->request->cookie('token');
 		$options = [
 			//'http_errors' => false,
 			'headers' => [
 				'Authorization' => 'bearer ' . $token,
-				'Accept' => 'application/json',
+				'Accept'        => 'application/json',
 			]];
 		$client = new Client([
 			'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
-			'timeout' => 5.0,
+			'timeout'  => 5.0,
 		]);
 
 		try {
@@ -52,25 +53,25 @@ class guzzler {
 	}
 
 	private function handleException($e) {
-		$token = $this->request->cookie('token');
-		$code = $e->getResponse()->getStatusCode();
+		$token  = $this->request->cookie('token');
+		$code   = $e->getResponse()->getStatusCode();
 		$reason = $e->getResponse()->getReasonPhrase();
 		switch ($code) {
-		case '403':
-			$error = $code . ': you dont have permission for that resource [' . $reason . ']';
-			break;
-		case '401':
-			$error = $code . ': your token has expired [' . $reason . ']';
-			break;
-		case '404':
-			$error = $code . ': unable to locate data [' . $reason . ']';
-			break;
-		case '500':
-			$error = $code . ': problem with the server [' . $reason . ']';
-			break;
-		default:
-			$error = $code . ': unknown error';
-			break;
+			case '403':
+				$error = $code . ': you dont have permission for that resource [' . $reason . ']';
+				break;
+			case '401':
+				$error = $code . ': your token has expired [' . $reason . ']';
+				break;
+			case '404':
+				$error = $code . ': unable to locate data [' . $reason . ']';
+				break;
+			case '500':
+				$error = $code . ': problem with the server [' . $reason . ']';
+				break;
+			default:
+				$error = $code . ': unknown error';
+				break;
 		}
 
 		return response(view('error')

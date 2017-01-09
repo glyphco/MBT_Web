@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Redirect;
 use Socialite;
 
@@ -22,13 +23,13 @@ class SocialAuthController extends Controller {
 
 	public function callback($service) {
 		//create a temporary socailuser from the data we just received from the service (stateless because we arent validating state)
-		$socailuser = Socialite::with($service)->stateless()->user();
-
 		//$socailuser = Socialite::with($service)->user();
+		$socailuser = Socialite::with($service)->stateless()->user();
+		Log::info('fbtoken: ' . $socailuser->token);
 
 		$client = new Client([
 			'base_uri' => env('AUTH_SERVER', 'http://mbtauth.dev'),
-			'timeout' => 5.0,
+			'timeout'  => 5.0,
 		]);
 
 		$response = $client->request('GET', '/gettoken/' . $service, [
@@ -36,7 +37,7 @@ class SocialAuthController extends Controller {
 		]);
 
 		$contents = $response->getBody()->getContents();
-		$jwt = json_decode($contents, true)['JWT'];
+		$jwt      = json_decode($contents, true)['JWT'];
 		//dd($jwt);
 
 		$cookie = cookie('token', $jwt, config('jwt.ttl'), "/", null, false, true);
