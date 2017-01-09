@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>My Boring Town - Home</title>
+<title>My Boring Town - Error</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,600"
@@ -81,14 +81,19 @@ html, body {
 </style>
 </head>
 <body>
+<
 
-<div class="flex-center position-ref">
+
+	<div class="flex-center position-ref">
 		<div class="content">
-@include('head')
+			@include('head')
 
-			<div>
-@include('showlisting', ['events' => $events])
+			<div class="errors">
+
+			<h4>{{$error}}</h4>
+
 			</div>
+
 		</div>
 	</div>
 </body>
