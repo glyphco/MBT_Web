@@ -3,6 +3,7 @@
 @section('title', 'Venue - '. $venue['name'])
 
 @section('content')
-	@include('venue-card')
+	@include('cards.venue')
+	@include('cards.events', ['events' => $events])
 @endsection
 

@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
-	@include('showlisting', ['events' => $events])
+	@include('cards.events', ['events' => $events])
 @endsection
 
 

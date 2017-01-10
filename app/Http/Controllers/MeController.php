@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 //use Illuminate\Http\Request;
 
-class HomepageController extends Controller {
+class MeController extends Controller {
 
 	protected $request;
 	protected $guzzler;
@@ -18,13 +18,13 @@ class HomepageController extends Controller {
 
 	public function __invoke() {
 
-		$data = $this->guzzler->guzzleGET('event?current');
+		$data = $this->guzzler->guzzleGET('me');
 
 		// $data = array_values(array_sort($data, function ($value) {
 		// 	return $value['start'];
 		// }));
-
-		return view('homepage', ['events' => $data]);
+		dd($data);
+		return view('me', ['data' => $data]);
 
 	}
 

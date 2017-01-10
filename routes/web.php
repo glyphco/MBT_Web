@@ -27,10 +27,10 @@ Route::get('/logout', 'LogoutController');
 Route::group(['middleware' => 'JWTCookieExists'], function () {
 
 	Route::get('/', 'HomepageController');
-	Route::get('/home', 'HomeController@home');
+	Route::get('/me', 'MeController');
 
 	Route::get('/venue/map', 'VenueController@map');
-	Route::get('/venue/', 'VenueController@index');
+	Route::get('/venue', 'VenueController@index');
 	Route::get('/venue/{id}', 'VenueController@show');
 	Route::get('/venue/{id}/{name}', 'VenueController@show');
 

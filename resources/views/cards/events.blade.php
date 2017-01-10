@@ -6,7 +6,7 @@
 			        @if (isset($event['venue']['id']))
 						<a href="\venue\{{$event['venue']['id']}}\{{$event['venue']['name']}}">{{$event['venue']['name']}}</a>
 					@else
-						[VENUE]
+						{{$event['venue_name']}}
 					@endif
 			        </td>
 			        <td><span class="event-name">{{$event['name']}}:</span>

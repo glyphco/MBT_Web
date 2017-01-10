@@ -21,8 +21,9 @@ class VenueController extends Controller {
 	}
 
 	public function show(Request $request, $id, $name = null) {
-		$data = $this->guzzler->guzzleGET('venue/' . $id);
-		return view('venue-show', ['venue' => $data]);
+		$data   = $this->guzzler->guzzleGET('venue/' . $id);
+		$events = $this->guzzler->guzzleGET('event?current&v=' . $id);
+		return view('venue-show', ['venue' => $data, 'events' => $events]);
 	}
 
 	public function map(Request $request) {
@@ -35,7 +36,7 @@ class VenueController extends Controller {
 
 			$client = new Client([
 				'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
-				'timeout' => 5.0,
+				'timeout'  => 5.0,
 			]);
 
 			$response = $client->request('GET', '/venue/map', [

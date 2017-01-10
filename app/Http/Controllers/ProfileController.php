@@ -17,12 +17,13 @@ class ProfileController extends Controller {
 	public function index(Request $request, $id, $name = null) {
 		$data = $this->guzzler->guzzleGET('profile');
 		return view('profile-index', ['profile' => $data]);
+
 	}
 
 	public function show(Request $request, $id, $name = null) {
-		$data = $this->guzzler->guzzleGET('profile/' . $id);
-		dd($data);
-		return view('profile-show', ['profile' => $data]);
+		$data   = $this->guzzler->guzzleGET('profile/' . $id);
+		$events = $this->guzzler->guzzleGET('event?current&p=' . $id);
+		return view('profile-show', ['profile' => $data, 'events' => $events]);
 	}
 
 }

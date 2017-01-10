@@ -95,7 +95,7 @@ html, body {
             </div>
             <div class="position-ref links">
                 @section('links')
-<a href="logout">Logout</a>
+<a href="\">Events</a> - <a href="logout">Logout</a>
                 @show
             </div>
             <div class="content">
