@@ -44,7 +44,7 @@ class SocialAuthController extends Controller {
 
 		//return response()->json($jwt)->withCookie($cookie);
 
-		return redirect('\\')->withCookie($cookie);
+		return redirect("/#welcome")->withCookie($cookie);
 
 	}
 
