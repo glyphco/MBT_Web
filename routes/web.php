@@ -24,6 +24,9 @@ Route::get('/test', 'TestController@test');
 Route::get('/login', 'LoginController');
 Route::get('/logout', 'LogoutController');
 
+Route::get('/location', function () {
+	return view('location');
+});
 Route::group(['middleware' => 'JWTCookieExists'], function () {
 
 	Route::get('/', 'HomepageController');
