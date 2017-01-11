@@ -15,9 +15,9 @@ class VenueController extends Controller {
 		$this->guzzler = $guzzler;
 	}
 
-	public function index(Request $request, $id, $name = null) {
+	public function index(Request $request) {
 		$data = $this->guzzler->guzzleGET('venue');
-		return view('venue-index', ['venue' => $data]);
+		return view('venue-index', ['venues' => $data]);
 	}
 
 	public function show(Request $request, $id, $name = null) {

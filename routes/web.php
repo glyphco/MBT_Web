@@ -31,9 +31,12 @@ Route::group(['middleware' => 'JWTCookieExists'], function () {
 
 	Route::get('/venue/map', 'VenueController@map');
 	Route::get('/venue', 'VenueController@index');
+	Route::get('/venues', 'VenueController@index');
 	Route::get('/venue/{id}', 'VenueController@show');
 	Route::get('/venue/{id}/{name}', 'VenueController@show');
 
+	Route::get('/profile', 'ProfileController@index');
+	Route::get('/profiles', 'ProfileController@index');
 	Route::get('/profile/{id}', 'ProfileController@show');
 	Route::get('/profile/{id}/{name}', 'ProfileController@show');
 
