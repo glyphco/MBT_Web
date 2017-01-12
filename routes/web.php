@@ -27,6 +27,11 @@ Route::get('/logout', 'LogoutController');
 Route::get('/location', function () {
 	return view('location');
 });
+
+Route::get('/mbt', function () {
+	return view('layouts.mbt');
+});
+
 Route::group(['middleware' => 'JWTCookieExists'], function () {
 
 	Route::get('/', 'HomepageController');

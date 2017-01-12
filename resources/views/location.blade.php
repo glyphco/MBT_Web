@@ -12,7 +12,7 @@
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
-        height: 80%;
+        height: 100%;
         margin: 0;
         padding: 0;
       }
@@ -21,29 +21,26 @@
   <body>
     <div id="map"></div>
     <script>
-      // Note: This example requires that you consent to location sharing when
-      // prompted by your browser. If you see the error "The Geolocation service
-      // failed.", it means you probably did not give permission for the browser to
-      // locate you.
+var myLatlng = {lat: 41.91,  lng: -87.66};
 
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 41.91,  lng: -87.66},
-          zoom: 6
+          center: myLatlng,
+          zoom: 12
         });
         var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
+            myLatlng = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
 
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
-            map.setCenter(pos);
+            // infoWindow.setPosition(myLatlng);
+            // infoWindow.setContent('Location found.');
+            map.setCenter(myLatlng);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
@@ -52,22 +49,75 @@
           handleLocationError(false, infoWindow, map.getCenter());
         }
 
-        google.maps.event.addListener(RdrMarker, 'click', function() {
-   map.panTo(RdrMarker.getPosition());
-   infowindow.setContent(contentStringRdr);
-   infowindow.open(map,RdrMarker);
-});
+        var marker = new google.maps.Marker({
+          position: myLatlng,
+          map: map,
+          title: 'you'
+        });
+
+
+        map.addListener('center_changed', function() {
+          marker.setPosition(map.getCenter());
+          //map.setMapOnAll(null);
+          //map.setZoom(8);
+          //addMarker(event.latLng);
+
+// marker = new google.maps.Marker({
+//           position: location,
+//           map: map
+//        });
+
+        // var marker = new google.maps.Marker({
+        //   position: myLatlng,
+        //   map: map,
+        //   title: 'you'
+        // });
+          // map.setCenter(marker.getPosition());
+        });
+
+        // map.addListener('center_changed', function() {
+        //   // 3 seconds after the center of the map has changed, pan back to the
+        //   // marker.
+        //   window.setTimeout(function() {
+        //     map.addMarker(event.latLng);
+        //   }, 500);
+        // });
+
+      // Adds a marker to the map and push to the array.
+
+
       }
 
-      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-                              'Error: The Geolocation service failed.' :
-                              'Error: Your browser doesn\'t support geolocation.');
+      function addMarker(location) {
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        markers.push(marker);
       }
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        //dont do anything
+        // infoWindow.setPosition(pos);
+        // infoWindow.setContent(browserHasGeolocation ?
+        //                       'Error: The Geolocation service failed.' :
+        //                       'Error: Your browser doesn\'t support geolocation.');
+      }
+
+
+            // Sets the map on all markers in the array.
+      // function setMapOnAll(map) {
+      //   for (var i = 0; i < markers.length; i++) {
+      //     markers[i].setMap(map);
+      //   }
+      // }
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRVje7gRNWDLDu0fBpuSPxMmr4wUrmikc&callback=initMap">
     </script>
   </body>
 </html>
+
+
+
+
