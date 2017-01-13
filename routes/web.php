@@ -52,4 +52,8 @@ Route::group(['middleware' => 'JWTCookieExists'], function () {
 	Route::get('/profile/{id}', 'ProfileController@show');
 	Route::get('/profile/{id}/{name}', 'ProfileController@show');
 
+	Route::get('/newvenue', function () {
+		return view('pages.newvenue');
+	})->name('testlayout');
+
 });
