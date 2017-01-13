@@ -1,10 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.mbt')
 
 @section('title', 'Login')
 
-@section('links')
-				<a href="redirect/facebook">Login in with Facebook</a> <a
-					href="redirect/google">Login in with Google</a>
+@section('navlinks')
+@include('layouts.navlinks-login')
 @endsection
 
 @section('content')
