@@ -28,6 +28,10 @@ Route::get('/location', function () {
 	return view('location');
 });
 
+Route::get('/map', function () {
+	return view('map');
+});
+
 Route::group(['middleware' => 'JWTCookieExists'], function () {
 
 	Route::get('/mbt', function () {
