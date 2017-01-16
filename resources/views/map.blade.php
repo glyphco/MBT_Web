@@ -90,24 +90,7 @@
   <div class="pac-card" id="pac-card">
       <div>
         <div id="title">
-          Autocomplete search
-        </div>
-        <div id="type-selector" class="pac-controls">
-          <input type="radio" name="type" id="changetype-all" checked="checked">
-          <label for="changetype-all">All</label>
-
-          <input type="radio" name="type" id="changetype-establishment">
-          <label for="changetype-establishment">Establishments</label>
-
-          <input type="radio" name="type" id="changetype-address">
-          <label for="changetype-address">Addresses</label>
-
-          <input type="radio" name="type" id="changetype-geocode">
-          <label for="changetype-geocode">Geocodes</label>
-        </div>
-        <div id="strict-bounds-selector" class="pac-controls">
-          <input type="checkbox" id="use-strict-bounds" value="">
-          <label for="use-strict-bounds">Strict Bounds</label>
+          Search
         </div>
       </div>
       <div id="pac-container">
@@ -122,6 +105,11 @@
       <span id="place-address"></span>
     </div>
         <table id="address">
+      <tr>
+        <td class="label">Name</td>
+        <td class="wideField" colspan="3"><input class="field"
+              id="name" disabled="true"></input></td>
+      </tr>
       <tr>
         <td class="label">Street address</td>
         <td class="slimField"><input class="field" id="street_number"
@@ -151,6 +139,25 @@
         <td class="wideField" colspan="3"><input class="field"
               id="country" disabled="true"></input></td>
       </tr>
+      <tr>
+        <td class="label">Lat</td>
+        <td class="slimField"><input class="field"
+              id="lat" disabled="true"></input></td>
+        <td class="label">Lng</td>
+        <td class="slimField"><input class="field"
+              id="lng" disabled="true"></input></td>
+      </tr>
+      <tr>
+        <td class="label">website</td>
+        <td class="wideField" colspan="3"><input class="field"
+              id="website" disabled="true"></input></td>
+      </tr>
+      <tr>
+        <td class="label">google_place_id</td>
+        <td class="wideField" colspan="3"><input class="field"
+              id="google_place_id" disabled="true"></input></td>
+      </tr>
+
     </table>
 
     <script>
@@ -159,16 +166,22 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
       function initMap() {
+        var origin = {lat: 41.94, lng: -87.68};
+        var REQUIRED_ZOOM = 15;
+
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
+          center: origin,
           zoom: 13
         });
         var card = document.getElementById('pac-card');
         var input = document.getElementById('pac-input');
         var types = document.getElementById('type-selector');
         var strictBounds = document.getElementById('strict-bounds-selector');
-
         map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+
+
+
+
 
         var autocomplete = new google.maps.places.Autocomplete(input);
         var placeSearch;
@@ -191,14 +204,19 @@
         infowindow.setContent(infowindowContent);
         var marker = new google.maps.Marker({
           map: map,
-          anchorPoint: new google.maps.Point(0, -29)
+          anchorPoint: new google.maps.Point(1, 1)
         });
 
+  map.addListener('click', function(e) {
+    googleMapClickHandler(e.latLng, map);
+  });
+
         autocomplete.addListener('place_changed', function() {
-          fillInAddress();
+
           infowindow.close();
           marker.setVisible(false);
           var place = autocomplete.getPlace();
+          fillInAddress(place);
           if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
             // pressed the Enter key, or the Place Details request failed.
@@ -231,19 +249,34 @@
           infowindow.open(map, marker);
         });
 
+        function googleMapClickHandler(latlng, map) {
+return;
+          if(map.getZoom() < REQUIRED_ZOOM) {
+            //alert("You need to zoom in more to set the location accurately." );
+            return;
+          }
+
+            marker.setPosition(latlng);
+            marker.setVisible(true);
+
+
+          document.getElementById('lat').value = latlng.lat();
+          document.getElementById('lng').value = latlng.lng();
+
+        }
+
         // Sets a listener on a radio button to change the filter type on Places
         // Autocomplete.
         function setupClickListener(id, types) {
-          var radioButton = document.getElementById(id);
-          radioButton.addEventListener('click', function() {
-            autocomplete.setTypes(types);
-          });
+          // var radioButton = document.getElementById(id);
+          // radioButton.addEventListener('click', function() {
+          //   autocomplete.setTypes(types);
+          // });
         }
 
-        function fillInAddress() {
+        function fillInAddress(place) {
           // Get the place details from the autocomplete object.
-          var place = autocomplete.getPlace();
-
+          //var place = autocomplete.getPlace();
           for (var component in componentForm) {
             document.getElementById(component).value = '';
             document.getElementById(component).disabled = false;
@@ -258,18 +291,24 @@
               document.getElementById(addressType).value = val;
             }
           }
+
+          document.getElementById('name').value = place.name;
+          document.getElementById('lat').value = place.geometry.location.lat();
+          document.getElementById('lng').value = place.geometry.location.lng();
+          document.getElementById('website').value = place.website;
+          document.getElementById('google_place_id').value = place.id;
         }
 
-        setupClickListener('changetype-all', []);
-        setupClickListener('changetype-address', ['address']);
-        setupClickListener('changetype-establishment', ['establishment']);
-        setupClickListener('changetype-geocode', ['geocode']);
+        // setupClickListener('changetype-all', []);
+        // setupClickListener('changetype-address', ['address']);
+        // setupClickListener('changetype-establishment', ['establishment']);
+        // setupClickListener('changetype-geocode', ['geocode']);
 
-        document.getElementById('use-strict-bounds')
-            .addEventListener('click', function() {
-              console.log('Checkbox clicked! New state=' + this.checked);
-              autocomplete.setOptions({strictBounds: this.checked});
-            });
+        // document.getElementById('use-strict-bounds')
+        //     .addEventListener('click', function() {
+        //       console.log('Checkbox clicked! New state=' + this.checked);
+        //       autocomplete.setOptions({strictBounds: this.checked});
+        //     });
       }
     </script>
     <script async defer
