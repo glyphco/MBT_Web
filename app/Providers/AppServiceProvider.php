@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Blade::directive('has', function ($option) {
+            $attributes = Request::instance()->query('user_data')['attributes'];
+            if (in_array($option, $attributes)) {
+                return "<?php if (true) : ?>";
+            }
+            return "<?php if (false) : ?>";
+        });
+        \Blade::directive('endhas', function ($options) {
+            return "<?php endif; // Entrust::can ?>";
+        });
+
     }
 
     /**
