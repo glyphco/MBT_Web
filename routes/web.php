@@ -25,39 +25,39 @@ Route::get('/login', 'LoginController');
 Route::get('/logout', 'LogoutController');
 
 Route::get('/location', function () {
-	return view('location');
+    return view('location');
 });
 
 Route::get('/map', function () {
-	return view('map');
+    return view('map');
 });
 
 Route::group(['middleware' => 'JWTCookieExists'], function () {
 
-	Route::get('/mbt', function () {
-		return view('layouts.mbt');
-	})->name('testlayout');
+    Route::get('/mbt', function () {
+        return view('layouts.mbt');
+    })->name('testlayout');
 
-	Route::get('/', 'HomepageController');
-	Route::get('/me', 'MeController');
+    Route::get('/', 'HomepageController');
+    Route::get('/me', 'MeController');
 
-	Route::get('/event', 'HomepageController')->name('events');
-	Route::get('/events', 'HomepageController')->name('events');
-	Route::get('/event/{id}', 'HomepageController');
+    Route::get('/event', 'EventController')->name('events');
+    Route::get('/events', 'EventController')->name('events');
+    Route::get('/event/{id}', 'EventController');
 
-	Route::get('/venue/map', 'VenueController@map');
-	Route::get('/venue', 'VenueController@index')->name('venue');
-	Route::get('/venues', 'VenueController@index')->name('venues');
-	Route::get('/venue/{id}', 'VenueController@show');
-	Route::get('/venue/{id}/{name}', 'VenueController@show');
+    Route::get('/venue/map', 'VenueController@map');
+    Route::get('/venue', 'VenueController@index')->name('venue');
+    Route::get('/venues', 'VenueController@index')->name('venues');
+    Route::get('/venue/{id}', 'VenueController@show');
+    Route::get('/venue/{id}/{name}', 'VenueController@show');
 
-	Route::get('/profile', 'ProfileController@index')->name('profile');
-	Route::get('/profiles', 'ProfileController@index')->name('profiles');
-	Route::get('/profile/{id}', 'ProfileController@show');
-	Route::get('/profile/{id}/{name}', 'ProfileController@show');
+    Route::get('/profile', 'ProfileController@index')->name('profile');
+    Route::get('/profiles', 'ProfileController@index')->name('profiles');
+    Route::get('/profile/{id}', 'ProfileController@show');
+    Route::get('/profile/{id}/{name}', 'ProfileController@show');
 
-	Route::get('/newvenue', function () {
-		return view('pages.newvenue');
-	})->name('testlayout');
+    Route::get('/newvenue', function () {
+        return view('pages.newvenue');
+    })->name('testlayout');
 
 });
