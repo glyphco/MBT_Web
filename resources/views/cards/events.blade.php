@@ -18,7 +18,6 @@
     padding: 4px 0px 4px 0px;
     white-space:nowrap;
     display: inline-block;
-
 }
 .link_button_profile>a:link {
     -webkit-border-radius: 4px;

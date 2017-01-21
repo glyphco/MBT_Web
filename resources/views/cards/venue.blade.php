@@ -31,8 +31,8 @@
 
 <div>
     <div class="mbt-venue">
-        <img align="left" class="mbt-image-lg" src="http://lorempixel.com/850/280/nightlife" alt="venue image example"/>
-        <img align="left" class="mbt-image-venue thumbnail" src="http://lorempixel.com/180/180/nightlife" alt="venue image example"/>
+        <img align="left" class="mbt-image-lg" src="{{$venue['backgroundurl']}}" alt="venue image example"/>
+        <img align="left" class="mbt-image-venue thumbnail" src="{{$venue['imageurl']}}" alt="venue image example"/>
         <div class="mbt-venue-text">
             <h1>{{$venue['name']}}</h1>
             <p>{{$venue['street_address']}} {{$venue['city']}}, {{$venue['state']}} {{$venue['zipcode']}}</p>

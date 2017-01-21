@@ -10,6 +10,10 @@
     margin: -90px 10px 0px 50px;
     z-index: 9;
     width: 20%;
+    /*border-bottom-left-radius: 50%;*/
+    border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
 }
 
 @media (max-width:768px)
@@ -24,7 +28,9 @@
 {
     margin: -45px 10px 0px 25px;
     border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
     border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
     z-index: 9;
     width: 20%;
 }
@@ -33,8 +39,8 @@
 
 <div>
     <div class="mbt-profile">
-        <img align="left" class="mbt-image-lg" src="http://lorempixel.com/850/280/nightlife" alt="Profile image example"/>
-        <img align="left" class="mbt-image-profile thumbnail" src="http://lorempixel.com/180/180/people" alt="Profile image example"/>
+        <img align="left" class="mbt-image-lg" src="{{$profile['backgroundurl']}}" alt="Profile image example"/>
+        <img align="left" class="mbt-image-profile thumbnail" src="{{$profile['imageurl']}}"" alt="Profile image example"/>
         <div class="mbt-profile-text">
             <h1>{{$profile['name']}}</h1>
             <p>{{$profile['city']}}, {{$profile['state']}}</p>
