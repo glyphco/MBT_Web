@@ -3,6 +3,5 @@
 @section('title', 'Venues')
 
 @section('content')
-	@include('cards.venues', ['venues' => $venues])
+	@include('venue._venuelist', ['venues' => $venues])
 @endsection
-

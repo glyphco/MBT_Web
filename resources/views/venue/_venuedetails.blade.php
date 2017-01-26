@@ -35,7 +35,7 @@
         <img align="left" class="mbt-image-venue thumbnail" src="{{$venue['imageurl']}}" alt="venue image example"/>
         <div class="mbt-venue-text">
             <h1>{{$venue['name']}}</h1>
-            <p>{{$venue['street_address']}} {{$venue['city']}}, {{$venue['state']}} {{$venue['zipcode']}}</p>
+            <p>{{$venue['street_address']}} {{$venue['city']}}, {{$venue['state']}} {{$venue['postalcode']}}</p>
         </div>
     </div>
 </div>
@@ -49,7 +49,7 @@
   {{$venue['street_address']}}<br>
   {{$venue['city']}}<br>
   {{$venue['state']}}<br>
-  {{$venue['zipcode']}}<br>
+  {{$venue['postalcode']}}<br>
   {{$venue['lat']}}<br>
   {{$venue['lng']}}<br>
   {{$venue['phone']}}<br>

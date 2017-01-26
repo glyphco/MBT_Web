@@ -45,11 +45,17 @@ Route::group(['middleware' => 'JWTCookieExists'], function () {
     Route::get('/events', 'EventController')->name('events');
     Route::get('/event/{id}', 'EventController');
 
-    Route::get('/venue/map', 'VenueController@map');
-    Route::get('/venue', 'VenueController@index')->name('venue');
     Route::get('/venues', 'VenueController@index')->name('venues');
-    Route::get('/venue/{id}', 'VenueController@show');
-    Route::get('/venue/{id}/{name}', 'VenueController@show');
+    Route::get('/venue/map', 'VenueController@map');
+    Route::get('/venue', 'VenueController@index')->name('venue.index');
+    Route::get('/venue/{id}', 'VenueController@show')->name('venue.show');
+    Route::get('/venue/{id}/edit', 'VenueController@edit')->name('venue.edit');
+    Route::get('/venue/create', 'VenueController@create')->name('venue.create');
+    Route::post('/venue', 'VenueController@store')->name('venue.store');
+    Route::put('/venue/{id}', 'VenueController@update')->name('venue.update');
+    Route::delete('/venue/{id}', 'VenueController@destroy')->name('venue.destroy');
+
+    Route::get('/venue/{id}/{name}', 'VenueController@show')->name('venue.showname');
 
     Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::get('/profiles', 'ProfileController@index')->name('profiles');

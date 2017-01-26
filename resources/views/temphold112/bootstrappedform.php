@@ -1,12 +1,4 @@
-@extends('layouts.mbt')
-
-@section('title', 'New Venue')
-
-@section('content')
-
-
-
-{{ Form::open(['url' => 'venue'])}}
+{{ Form::open(['url' => '/venue'])}}
 <div class="form-group">
   {{ Form::label('name', 'Venue Name', ['class' => 'control-label'])}}
   {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Venue'])}}
@@ -61,5 +53,3 @@
 
 {{ Form::submit('Submit')}}
 {{ Form::close()}}
-
-@endsection
