@@ -17,9 +17,9 @@ Route::get('/redirect/{service}', 'SocialAuthController@redirect');
 //Come back from SocialAuth
 Route::get('/callback/{service}', 'SocialAuthController@callback');
 //Go to the Auth Sever to get a JWT
-Route::get('/gettoken/{service}', 'JWTAuthController@gettoken');
+//Route::get('/gettoken/{service}', 'JWTAuthController@gettoken');
 
-Route::get('/test', 'TestController@test');
+//Route::get('/test', 'TestController@test');
 
 Route::get('/login', 'LoginController');
 Route::get('/logout', 'LogoutController');
