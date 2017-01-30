@@ -99,6 +99,50 @@ class guzzler
 
     }
 
+    public function guzzlePUT($location, $params = null)
+    {
+        $token   = $this->request->cookie('token');
+        $options = [
+            //'http_errors' => false,
+            'headers'     => [
+                'Authorization' => 'bearer ' . $token,
+                'Accept'        => 'application/json',
+            ],
+            'form_params' => $params,
+        ];
+        $client = new Client([
+            'base_uri' => env('API_SERVER', 'http://api.myboringtown.com'),
+            'timeout'  => 5.0,
+        ]);
+
+        try {
+
+            $response = $client->request('POST', $location, $options);
+            //$response = $client->request('GET', 'http://httpstat.us/404', $options); //force an error (testing)
+
+            $contents = $response->getBody()->getContents();
+
+        } catch (\GuzzleHttp\Exception\ConnectException $e) {
+
+            $this->handleException($e);
+
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $this->handleException($e);
+        } catch (GuzzleHttp\Exception\ServerException $e) {
+            $this->handleException($e);
+        }
+        $contents = json_decode($contents, true);
+
+        if ($contents['status'] == 'error') {
+            dd($contents);
+        }
+
+        //var_dump($contents['data'][4]);
+        // var_dump($token);
+        return $contents['data'];
+
+    }
+
     public function guzzleDELETE($location)
     {
         $token   = $this->request->cookie('token');

@@ -51,7 +51,7 @@ class VenueController extends Controller
     public function edit($id)
     {
         $data = $this->guzzler->guzzleGET('venue/' . $id);
-        return view('pages.venue.edit', ['venues' => $data]);
+        return view('venue.edit', ['venue' => $data]);
     }
 
     /**
