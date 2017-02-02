@@ -10,8 +10,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600"
         rel="stylesheet" type="text/css">
-   <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Mono|Fira+Sans" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Styles -->
 <style>
 html, body {
@@ -90,7 +91,7 @@ html, body {
         <div class="position-ref">
             <div class="head">
                 @section('head')
-                    <div class="title">MyBoringTown -0.0a</div>
+                    <div class="title">MyBoringTown</div>
                 @show
             </div>
             <div class="position-ref links">
@@ -104,4 +105,3 @@ html, body {
         </div>
     </body>
 </html>
-

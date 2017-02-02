@@ -31,12 +31,13 @@ class AppServiceProvider extends ServiceProvider
             $rootpermission = 'forgetit';
             $pieces         = explode(".", $option);
             if (array_key_exists(2, $pieces)) {
-                $rootpermission = $pieces[0] . "s-" . $pieces[2];
+                $option         = $pieces[0] . ".\".e(" . $pieces[1] . ").\"." . $pieces[2];
+                $rootpermission = $pieces[2] . "-" . $pieces[0] . "s";
             }
 
             return '<?php
                 $attributes = Request::instance()->query("user_data")["attributes"];
-                $value      = ((array_get($attributes, "' . $option . '", false)) || (array_get($attributes, "' . $rootpermission . '", false)));
+                $value      = (((array_get($attributes, "' . $option . '", false)) || (array_get($attributes, "' . $rootpermission . '", false))));
 
                 if($value) :
 

@@ -66,4 +66,13 @@ Route::group(['middleware' => 'JWTCookieExists'], function () {
         return view('pages.newvenue');
     })->name('testlayout');
 
+    Route::group(['prefix' => 'backstage'], function () {
+
+        Route::get('/', 'backstage\IndexController');
+        Route::post('sendsms', 'tests\TestSMSController@sendsms');
+        Route::post('getfile', 'tests\TestGetFileController@getfile');
+        Route::get('timezones', 'tests\TestTimezonesController@index');
+
+    });
+
 });

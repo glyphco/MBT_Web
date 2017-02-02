@@ -7,7 +7,7 @@
               <td><span class="event-name">{{$venue['category']}}</span></td>
               <td><span class="event-name">{{$venue['street_address']}}, {{$venue['city']}}, {{$venue['state']}}</span>
           </td>
-          @has(edit-venues)
+          @has(venue.$venue['id'].edit)
           <td>
           {{ Form::open(['method' => 'GET', 'route' => ['venue.edit', $venue['id']]]) }}
               {{ Form::submit('Edit', ['class' => 'btn btn-danger']) }}
